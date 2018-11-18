@@ -38,17 +38,7 @@ The command above will create a terrafrom plan file which shows you what will ha
 
 ## Build the site (create the Droplet)
 
-```terraform apply```
-
-## Destroy the droplet
-
-```terraform plan -destroy```
-
-will create a plan file that shows you what will be destroyed without actually destroying anything.
-
-once you are ready, run the command below to destroy the droplet.
-
-```terraform destroy -var "do_token=${DO_PAT}"```
+```terraform apply -var "do_token=${DO_PAT}"```
 
 ## Review your droplet
 
@@ -94,6 +84,16 @@ You should now be able to ssh into your Droplet using the "ipv4_address" obtainn
 ```ssh deployuser@104.248.3.167```
 
 - If you changed the user within the cloudinit/user_data.yml substitute that with the username above as well.
+
+## Destroy the droplet
+
+```terraform plan -destroy```
+
+will create a plan file that shows you what will be destroyed without actually destroying anything.
+
+once you are ready, run the command below to destroy the droplet.
+
+```terraform destroy -var "do_token=${DO_PAT}"```
 
 
 
