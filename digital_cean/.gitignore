@@ -4,3 +4,5 @@ cloud_init
 *.retry
 .terraform/
 terraform.tfstate*
+ansible.cfg
+inventory
