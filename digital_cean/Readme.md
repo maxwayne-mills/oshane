@@ -2,24 +2,17 @@
 
 ## Add Digital Ocean Token to the environment
 
-- export DO_PAT=""
+- ```export DO_PAT=""```
 
 place your Digital Ocean token between the quotes above.
+
+## Run setup.yml
+
+```ansible-playbook setup.yml```
 
 ## Initialize terraform
 
 - ```terraform init```
-
-
-## Clone github repositories
-
-- ```git clone https://github.com/maxwayne-mills/ansible.git```
-- ```git clone https://github.com/maxwayne-mills/shell_scripts.git```
-- ```git clone https://github.com/maxwayne-mills/cloud_init.git```
-
-### copy ansible configuration file into root directory
-
-- ```cp ansible/ansible.cfg .```
 
 ### modify user_data.yml file within cloudinit repository (directory)
 
@@ -38,13 +31,14 @@ place your Digital Ocean token between the quotes above.
 ## Create a terraform plan
 
 ```terraform plan -out=$(planfile) -var "do_token=${DO_PAT}"```
+
 - ```$(planfile)``` should lead to a directory and file outside of your present directory.
 
 The command above will create a terrafrom plan file which shows you what will happen without making any changes.
 
 ## Build the site (create the Droplet)
 
-``` terraform apply ```
+```terraform apply```
 
 ## Destroy the droplet
 
@@ -95,9 +89,11 @@ digitalocean_droplet.srv1: (tainted)
 
 ### SSH into your droplet
 
+You should now be able to ssh into your Droplet using the "ipv4_address" obtainned by the resuls of executing the command above, substitute the "ipv4_address" from above int the command below.
+
 ```ssh deployuser@104.248.3.167```
 
-- If you changed the user within the cloudinit/user_data.yml substitute that with the username above.
+- If you changed the user within the cloudinit/user_data.yml substitute that with the username above as well.
 
 
 
