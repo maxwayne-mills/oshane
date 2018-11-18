@@ -1,0 +1,55 @@
+## Date: November 18, 2018
+## Author: Clarence Mills
+## create Ansible configuration file and download configuration dependencies
+---
+- hosts: localhost
+  tasks:
+
+  - name: Create ansible.cfg file
+    file:
+      path: "{{ ansible_env.PWD }}/ansible.cfg"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_gid }}"
+      mode: 0644
+      state: touch
+      
+  - name: Update ansible.cfg with configuration items
+    lineinfile:
+      path: "{{ ansible_env.PWD }}/ansible.cfg"
+      state: present
+      line: "{{ item }}"
+    with_items:
+      - "[defaults]"
+      - inventory             = inventory
+      - roles_path            = roles
+      - retry_files_enabled   = False
+
+  - name: Create Git ignore file
+    file:
+      path: "{{ ansible_env.PWD }}/.gitignore"
+      owner: "{{ ansible_user_id }}"
+      group: "{{ ansible_user_gid }}"
+      mode: 0644
+      state: touch
+
+  - name: Update Git ignore file
+    lineinfile:
+      path: "{{ ansible_env.PWD }}/.gitignore"
+      state: present
+      line: "{{ item }}"
+    with_items:
+      - ansible
+      - roles
+      - cloud_init
+      - "*.retry"
+      - .terraform/
+      - terraform.tfstate*
+
+  #- name: Download Ansible roles
+  #  local_action: command ansible-galaxy --roles-path . install -r requirements.yml
+
+  - name: Clone dependencies
+    local_action: command git clone "{{ item }}"
+    with_items:
+      - https://github.com/maxwayne-mills/cloud_init.git
+    

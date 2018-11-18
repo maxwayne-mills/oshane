@@ -1,0 +1,6 @@
+ansible
+roles
+cloud_init
+*.retry
+.terraform/
+terraform.tfstate*

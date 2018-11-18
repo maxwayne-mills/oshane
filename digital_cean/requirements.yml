@@ -1,0 +1,3 @@
+---
+- src: https://github.com/maxwayne-mills/ansible.git
+  scm: git
