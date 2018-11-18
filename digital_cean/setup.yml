@@ -50,8 +50,22 @@
   #- name: Download Ansible roles
   #  local_action: command ansible-galaxy --roles-path . install -r requirements.yml
 
+  - name: remove already cloned repositories if they exist
+    file:
+      path: "{{ ansible_env.PWD }}/{{ item }}"
+      state: absent
+    with_items:
+      - cloud_init
+
   - name: Clone dependencies
-    local_action: command git clone "{{ item }}"
+    git:
+      repo: "{{ item }}"
+      clone: yes
+      #bare: yes
+      force: yes
+      recursive: no
+      depth: 1
+      dest: "{{ ansible_env.PWD }}/cloud_init"
     with_items:
       - https://github.com/maxwayne-mills/cloud_init.git
     
